@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: canary-app
+  name: canary-app
+  namespace: service-mesh-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: canary-app
+  template:
+    metadata:
+      labels:
+        app: canary-app
+    spec:
+      containers:
+      - env:
+        - name: RELEASE
+          value: "canary-release"
+        image: dkdevelopment/snhc-node:3.0.0
+        name: canary-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-app-service
+  namespace: service-mesh-canary
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: canary-app
