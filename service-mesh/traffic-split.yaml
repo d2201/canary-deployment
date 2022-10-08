@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+  namespace: service-mesh-canary
+  annotations:
+    mesh.traefik.io/traffic-type: "http" # This is required!!
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+    # We are explicitly not setting any selector as traefik 
+    # will serve the traffic from prod-app-service & canary-app-service
+---
+apiVersion: split.smi-spec.io/v1alpha3
+kind: TrafficSplit
+metadata:
+  name: service-mesh-canary
+spec:
+  service: app
+  backends:
+  # Serve 90% to our prod & 10% to canary
+  - service: prod-app-service
+    weight: 90
+  - service: canary-app-service
+    weight: 10
