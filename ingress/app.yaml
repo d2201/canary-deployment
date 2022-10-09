@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app
+  name: app
+  namespace: ingress-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - env:
+        - name: RELEASE
+          value: "prod-release"
+        image: dkdevelopment/snhc-node:3.0.0
+        name: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prod-app-service
+  namespace: ingress-canary
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: app
