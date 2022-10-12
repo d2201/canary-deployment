@@ -10,6 +10,10 @@ LMGTFY - https://semaphoreci.com/blog/what-is-canary-deployment
 
 Examples will not be introducing the full flow of canary deployment (partial release -> full release). This is to show how to split traffic on cluster level.
 
+## Summary
+
+TODO
+
 ## Contributing
 
 Please create an issue to discuss either new strategy or propose changes in the current strategies.
