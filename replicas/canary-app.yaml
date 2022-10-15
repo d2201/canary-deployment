@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app
+    version: canary
+  name: canary-app
+  namespace: replicas-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: app
+        version: canary
+    spec:
+      containers:
+      - env:
+        - name: RELEASE
+          value: "canary-release"
+        image: dkdevelopment/snhc-node:3.0.0
+        name: canary-app
