@@ -17,6 +17,7 @@ apiVersion: split.smi-spec.io/v1alpha3
 kind: TrafficSplit
 metadata:
   name: service-mesh-canary
+  namespace: service-mesh-canary
 spec:
   service: app
   backends:

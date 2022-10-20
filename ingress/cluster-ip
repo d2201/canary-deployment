@@ -1,0 +1,3 @@
+#!/bin/sh
+
+microk8s config | grep server | sed -E 's/.*https:\/\/(.*):.*/\1/g'
